@@ -1,0 +1,45 @@
+{
+  "host": "localhost",
+  "port": 3030,
+  "public": "../public/",
+  "paginate": {
+    "default": 10,
+    "max": 50
+  },
+  "authentication": {
+    "entity": "api-users",
+    "service": "api-users",
+    "secret": "LB2HoPBWgGgBF+VyeNlYiyISS+g=",
+    "authStrategies": [
+      "jwt",
+      "local"
+    ],
+    "jwtOptions": {
+      "header": {
+        "typ": "access"
+      },
+      "audience": "https://yourdomain.com",
+      "issuer": "feathers",
+      "algorithm": "HS256",
+      "expiresIn": "1d"
+    },
+    "local": {
+      "usernameField": "email",
+      "passwordField": "password"
+    }
+  },
+  "dbConfig": {
+    "host": "localhost",
+    "USER": "postgres",
+    "PASSWORD": "didomi",
+    "DB": "user_preferences_center_api",
+    "dialect": "postgres",
+    "pool": {
+      "max": 5,
+      "min": 0,
+      "acquire": 30000,
+      "idle": 10000
+    }
+  },
+  "postgres": "postgres://postgres:didomi@localhost:5432/user_preferences_center_api"
+}
