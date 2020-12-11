@@ -5,6 +5,7 @@ import * as local from '@feathersjs/authentication-local';
 const { authenticate } = feathersAuthentication.hooks;
 const { hashPassword, protect } = local.hooks;
 
+
 export default {
   before: {
     all: [],

@@ -7,17 +7,34 @@ import { HookReturn } from 'sequelize/types/lib/hooks';
 export default function (app: Application): typeof Model {
   const sequelizeClient: Sequelize = app.get('sequelizeClient');
   const apiUsers = sequelizeClient.define('api_users', {
-  
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      unique: true,
+      validate: {
+        isEmail: {
+          msg: 'Is not a valid email'
+        },
+        notNull: {
+          msg: 'The email is mandatory'
+        }
+      }
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false
-    },
-  
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'The password is mandatory'
+        }
+      }
+    }
   
   }, {
     hooks: {

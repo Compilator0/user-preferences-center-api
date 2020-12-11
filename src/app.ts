@@ -39,7 +39,13 @@ app.configure(configuration());
 app.use(helmet({
   contentSecurityPolicy: false
 }));
-app.use(cors());
+
+// Cross origin configuration
+let corsOptions = {
+  origin: "http://localhost:3030"
+};
+app.use(cors(corsOptions));
+
 app.use(compress());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -69,5 +75,5 @@ app.hooks(appHooks);
 
 console.log(process.env.POOL_MAX);
 console.log(process.env.NODE_ENV);
-
+//console.log(app.get('sequelizeClient').models);
 export default app;
