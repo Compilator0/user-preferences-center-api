@@ -35,13 +35,16 @@ export default function (app: Application): typeof Model {
   });
 
 
-    
+  
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   (events as any).associate = function (models: any): void {
     // Defining associations 
-    //events.belongsTo(sequelizeClient.models.users);
+    events.belongsTo(sequelizeClient.models.users, {
+      targetKey: 'id'
+    });
 
   };
-
+  
+ 
   return events;
 }

@@ -3,14 +3,24 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
 import { Application } from '../declarations';
 import { HookReturn } from 'sequelize/types/lib/hooks';
+import { generateUserUUIDv1 } from '../utils/didomi.jstools';
 
 export default function (app: Application): typeof Model {
   const sequelizeClient: Sequelize = app.get('sequelizeClient');
   const users = sequelizeClient.define('users', {
     id: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       primaryKey: true,
+      autoIncrement: true,
       allowNull: false
+    }, 
+    uuid: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isUUID: 1
+      }
     },
     email: {
       type: DataTypes.STRING,
@@ -22,11 +32,6 @@ export default function (app: Application): typeof Model {
         },
         notNull: {
           msg: 'The email is mandatory'
-        },
-        isUnique(value: string) {
-          if (value == "idris@didomi.com") {
-            throw new Error('This email is already used !');
-          }
         }
       }
     }  
@@ -41,20 +46,36 @@ export default function (app: Application): typeof Model {
 
   
 
-  /*
+  
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   (users as any).associate = function (models: any): void {
-    // Defining associations
-    //users.hasMany(sequelizeClient.models.events); 
+    // Defining associations 
+    
     users.belongsToMany(sequelizeClient.models.consent, { 
+      sourceKey: 'uuid', 
+      targetKey: 'id',
+      foreignKey: {
+        name : 'userUUID',
+        allowNull: false
+      },    
       through: { 
         model : sequelizeClient.models.events, 
+        //we prevent creating unicity of the couple (uuid, consentId) into the association table 
         unique: false 
-      } 
+      }
     });
   
+    users.hasMany(sequelizeClient.models.events, {
+      as : 'userEvents',
+      sourceKey: 'id',
+      foreignKey: {
+        name : 'userId',
+        allowNull: false
+      }
+    });
+    
   };
-  */
+  
 
   return users;
 }

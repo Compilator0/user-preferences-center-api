@@ -44,21 +44,24 @@ export default function (app: Application): typeof Model {
       }
     }
   });
-
- 
-
-  /*
+  
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   (consent as any).associate = function (models: any): void {
     // Defining associations 
     consent.belongsToMany(sequelizeClient.models.users, { 
+      sourceKey: 'id', 
+      targetKey: 'uuid',
+      foreignKey: {
+        name : 'consentId',
+        allowNull: false
+      },
       through: { 
         model : sequelizeClient.models.events, 
+        //we prevent creating unicity of the couple (uuid, consentId) into the association table 
         unique: false 
-      } 
+      }
     });
   };
-  */
 
   return consent;
 }

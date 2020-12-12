@@ -10,7 +10,7 @@ const { authenticate } = authentication.hooks;
   Controling the REST method to access the Event service
   According to the exercice we should not be able to update or delete envents
 */
-const controlServiceAcces = () => {
+const controlEnventServiceAcces = () => {
 
   return async (context: HookContext) => {
     const { method } = context;
@@ -43,7 +43,7 @@ const transformIncommingEventsDataBeforeInsertion = () => {
         //prepare the creation date of the event as recommended by the exercice
         let eventCreatedAt = new Date().getTime();
         //Building an event instance as it will be inserted accordingly to the "event" table structure.
-        return { 'eventCreatedAt' : eventCreatedAt, 'userId' : userOfInterest.id, 'consentId' : consentOfInterest.data[0].id };
+        return { 'eventCreatedAt' : eventCreatedAt, 'userId' : userOfInterest.id, 'consentId' : consentOfInterest.data[0].uuid };
       }
       else{
         return {};
@@ -72,7 +72,7 @@ export default {
   before: {
     //All securized all web service with Jwt token
     //control the REST method before each incoming request, the exercice require not be let possible event update and delete
-    all: [ authenticate('jwt'), controlServiceAcces() ],
+    all: [ authenticate('jwt'), controlEnventServiceAcces() ],
     find: [],
     get: [],
     //prepare our events data before storage into event table
