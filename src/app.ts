@@ -72,8 +72,9 @@ app.use(express.notFound());
 app.use(express.errorHandler({ logger } as any));
 
 app.hooks(appHooks);
-
+app.set('rawData', null);
 console.log(process.env.POOL_MAX);
 console.log(process.env.NODE_ENV);
+
 //console.log(app.get('sequelizeClient').models);
 export default app;
