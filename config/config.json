@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "didomi",
+    "database": "dev_user_preferences_center_api",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "didomi",
+    "database": "test_user_preferences_center_api",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "didomi",
+    "database": "prod_user_preferences_center_api",
+    "host": "didomi.com",
+    "dialect": "postgres"
+  }
+}

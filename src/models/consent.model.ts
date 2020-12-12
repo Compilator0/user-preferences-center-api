@@ -1,0 +1,64 @@
+// See http://docs.sequelizejs.com/en/latest/docs/models-definition/
+// for more of what you can do here.
+import { Sequelize, DataTypes, Model } from 'sequelize';
+import { Application } from '../declarations';
+import { HookReturn } from 'sequelize/types/lib/hooks';
+import users from './users.model';
+
+export default function (app: Application): typeof Model {
+  const sequelizeClient: Sequelize = app.get('sequelizeClient');
+  const consent = sequelizeClient.define('consent', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+    },
+    consentLabel: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isIn: {
+          args: [['email_notifications', 'sms_notifications']],
+          msg: "Must be 'email_notifications' or 'sms_notifications'"
+        },
+        notNull: {
+          msg: 'A consent id is mandatory'
+        }
+      }
+    },
+    consentDecision: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'A decision must be taken reltive to a consent'
+        }
+      }
+    }    
+    //2 fileds will be automatically added by sequelize : createdAt and updatedAt  
+  }, {
+    hooks: {
+      beforeCount(options: any): HookReturn {
+        options.raw = true;
+      }
+    }
+  });
+
+ 
+
+  /*
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  (consent as any).associate = function (models: any): void {
+    // Defining associations 
+    consent.belongsToMany(sequelizeClient.models.users, { 
+      through: { 
+        model : sequelizeClient.models.events, 
+        unique: false 
+      } 
+    });
+  };
+  */
+
+  return consent;
+}
