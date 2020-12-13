@@ -1,3 +1,4 @@
+import _, { at } from 'lodash'; 
 const {v4 : uuidv1} = require('uuid');
 
 //Generates a v1 UUID
@@ -16,3 +17,21 @@ export const dateFormatter = (today : Date) => {
     let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     return date+' '+time; 
 }
+
+// rename the key of a object 
+export const renameKey = (obj : any, oldName : any, newName : any) => {    
+    obj[newName] = obj[oldName];
+    delete obj[oldName];  
+    return obj; 
+} 
+
+// delete fields in an object 
+export const deleteObjectFields = (obj: any, ...attibutesToDelete : any[]) => {    
+    attibutesToDelete.forEach( (attr) => {
+        console.log(attibutesToDelete);
+        console.log(attr+'----------------------------'+attibutesToDelete[0]+'-----');
+        delete obj[attr];
+        //_.unset(obj, attr);
+    });
+    return obj;
+} 

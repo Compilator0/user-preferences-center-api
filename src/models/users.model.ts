@@ -8,18 +8,13 @@ import { generateUserUUIDv1 } from '../utils/didomi.jstools';
 export default function (app: Application): typeof Model {
   const sequelizeClient: Sequelize = app.get('sequelizeClient');
   const users = sequelizeClient.define('users', {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false
-    }, 
     uuid: {
       type: DataTypes.UUID,
-      allowNull: false,
+      primaryKey: true,
       unique: true,
+      allowNull: false,
       validate: {
-        isUUID: 1
+        isUUID: 4
       }
     },
     email: {
@@ -43,9 +38,6 @@ export default function (app: Application): typeof Model {
       }
     }
   });
-
-  
-
   
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   (users as any).associate = function (models: any): void {
@@ -55,23 +47,26 @@ export default function (app: Application): typeof Model {
       sourceKey: 'uuid', 
       targetKey: 'id',
       foreignKey: {
-        name : 'userUUID',
+        name : 'uuid',
         allowNull: false
       },    
       through: { 
         model : sequelizeClient.models.events, 
-        //we prevent creating unicity of the couple (uuid, consentId) into the association table 
+        // I prevent Sequelize from automatically creating the 'unique' constraint on this association table relative to the 2 foreign keys : consent's Id and user Id
+        // On the association table called 'Event', I've created a unique constraint for 3 fields inside of 2 fields as Sequelize would have automatically generated
+        // The unique constraint on this 'Event' association table will be for theses 3 fileds : the user's uuid, the consentId, event creation date
         unique: false 
       }
     });
   
     users.hasMany(sequelizeClient.models.events, {
       as : 'userEvents',
-      sourceKey: 'id',
+      sourceKey: 'uuid',
       foreignKey: {
-        name : 'userId',
+        name : 'userUuid',
         allowNull: false
-      }
+      },
+      onDelete: 'RESTRICT'
     });
     
   };

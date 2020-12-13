@@ -14,9 +14,12 @@ export default function (app: Application): typeof Model {
       autoIncrement: true,
       allowNull: false
     },
+    //eg : sms_notifications, email_notifications
     consentLabel: {
       type: DataTypes.STRING,
       allowNull: false,
+      // A constraint unicity on these couple of filed in the table : id and enabled
+      unique: 'consentUnicityConstraint',
       validate: {
         isIn: {
           args: [['email_notifications', 'sms_notifications']],
@@ -30,12 +33,13 @@ export default function (app: Application): typeof Model {
     consentDecision: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
+      unique: 'consentUnicityConstraint',
       validate: {
         notNull: {
           msg: 'A decision must be taken reltive to a consent'
         }
       }
-    }    
+    }
     //2 fileds will be automatically added by sequelize : createdAt and updatedAt  
   }, {
     hooks: {

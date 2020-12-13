@@ -19,9 +19,9 @@ import channels from './channels';
 import { HookContext as FeathersHookContext } from '@feathersjs/feathers';
 import authentication from './authentication';
 import sequelize from './sequelize';
-import { getDotEnv } from './utils/env.config';
+import { getDotEnv } from './env.config';
 
-//Library for env. variable management
+//for environment variable management
 getDotEnv();
 
 //require('dotenv').config();
