@@ -1,10 +1,10 @@
 {
   "development": {
-    "username": "postgres",
+    "username": "mysql",
     "password": "didomi",
     "database": "dev_user_preferences_center_api",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "mysql"
   },
   "test": {
     "username": "postgres",

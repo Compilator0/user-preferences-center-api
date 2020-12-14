@@ -19,7 +19,7 @@ export const dateFormatter = (today : Date) => {
 }
 
 // rename the key of a object 
-export const renameKey = (obj : any, oldName : any, newName : any) => {    
+export const renameKey = (obj : any, oldName : any, newName : any) => {     
     obj[newName] = obj[oldName];
     delete obj[oldName];  
     return obj; 
@@ -28,10 +28,18 @@ export const renameKey = (obj : any, oldName : any, newName : any) => {
 // delete fields in an object 
 export const deleteObjectFields = (obj: any, ...attibutesToDelete : any[]) => {    
     attibutesToDelete.forEach( (attr) => {
-        console.log(attibutesToDelete);
-        console.log(attr+'----------------------------'+attibutesToDelete[0]+'-----');
         delete obj[attr];
         //_.unset(obj, attr);
+    });
+    return obj;
+} 
+
+// filter fields of an object and delete the filed that aren't in the 2nd parameter 
+export const filterObjectFields = (obj: any, ...attibutesToDelete : any[]) => { 
+    Object.keys(obj).forEach( (key) => {
+        if( !attibutesToDelete.some( (attr: string) => attr === key )){
+            delete obj[key];
+        }
     });
     return obj;
 } 

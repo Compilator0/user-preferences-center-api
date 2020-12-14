@@ -18,7 +18,7 @@ export default function (app: Application): typeof Model {
       autoIncrement: true,
       allowNull: false
     },
-    createdAt: {
+    created_at: {
       type: DataTypes.DATE,
       allowNull: false,
       // A personalized name for the 'unique' constraint so that a notification 'Event' should always be unique in this association table 
@@ -43,8 +43,6 @@ export default function (app: Application): typeof Model {
       unique: 'eventUnicityConstraint'
     }
   }, {
-    // We don't want Sequelize to generated these two fields : createdAt and updatedAt
-    // since the consent event will never be Updated and the createdAt is comming from the request as recommended by the exercice
     timestamps: false,
     hooks: {
       beforeCount(options: any): HookReturn {

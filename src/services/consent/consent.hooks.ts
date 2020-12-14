@@ -9,15 +9,15 @@ const { authenticate } = authentication.hooks;
     An anonymous function that will use the API client's data in the Hook context to build a consent object
     It will be called before every CRUD request on consent service. 
   */
-  const buildConsentDataToStore = () => {
+  const formatConsentDataToStore = () => {
     return async (context: HookContext) => {
       const { data } = context;
       if(context.data !== undefined){
-          // We build a the consent object to store, according to the API client's data
-          // 3 fields will be automatically added to the object by the Sequelise schema of the table : auto-increment id, createdAt, updatedAt
+          // We build a the consent object to store, according to the client's API format
+          // 3 fields will be automatically added to the object by the Sequelise schema of the table : auto-increment id, date, updatedAt
           context.data = {
-            'consentLabel': data.id,
-            'consentDecision': data.enabled
+            'consent_label': data.id,
+            'consent_decision': data.enabled
           };
       }
       else{
@@ -29,41 +29,30 @@ const { authenticate } = authentication.hooks;
   } 
 
   /*
-    An anonymous function that will every time before returning the consent to the API's client
+    An anonymous function that will be called every time before returning the consent to the API's client
     It will be called after every CRUD request on consent service. 
   */
-  const buildConsentDataToRestore = () => {
+  const formatConsentToRestore = () => {
     return async (context: HookContext) => {
       const { result, method } = context;
-      console.log('aeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
-      console.log(result);
       if(result){
-          console.log('paeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
-          console.log(result);
           // Function that prepare the consent result to the API client's formats
           const buildConsentToReturn = async (currentConsent: any) => {
             // We build a the consent object to restore, according to the API client's format
             currentConsent = {
-              'id': currentConsent.consentLabel,
-              'enabled': currentConsent.consentDecision
+              'id': currentConsent.consent_label,
+              'enabled': currentConsent.consent_decision
             };
-            console.log('azzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
-            console.log(context);
             return currentConsent;
           }
           if(method === 'find') {
-            console.log('feeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
-            console.log(result);
             // Map on the list of consent data to build the consent data to return 
             context.result = await Promise.all(result.data.map(buildConsentToReturn));
           }
           else {
             // Otherwise just update the single result
-            console.log('neeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
-            console.log(result);
             context.result = await buildConsentToReturn(result);
           } 
-        
       } 
       
       // We return the hook context
@@ -76,14 +65,14 @@ export default {
     all: [ authenticate('jwt') ],
     find: [],
     get: [],
-    create: [ buildConsentDataToStore() ],
-    update: [ buildConsentDataToStore() ],
-    patch: [ buildConsentDataToStore() ],
-    remove: [ buildConsentDataToStore() ]
+    create: [ formatConsentDataToStore() ],
+    update: [ formatConsentDataToStore() ],
+    patch: [ formatConsentDataToStore() ],
+    remove: [ formatConsentDataToStore() ]
   },
 
   after: {
-    all: [ buildConsentDataToRestore() ],
+    all: [ formatConsentToRestore() ],
     find: [],
     get: [],
     create: [],

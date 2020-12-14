@@ -2,12 +2,15 @@ import { Sequelize } from 'sequelize';
 import { Application } from './declarations';
 
 export default function (app: Application): void {
-  const connectionString = app.get('postgres');
+  const connectionString = app.get('mysql');
   const sequelize = new Sequelize(connectionString, {
-    dialect: 'postgres',
+    dialect: 'mysql',
     logging: console.log,
     define: {
-      freezeTableName: true
+      freezeTableName: true,
+      //I've observed that without specifying this attribute 
+      //the consent Id in the event table was unknown by postgres on CRUD request, but was kown by mysql.  
+      underscored: true
     }
   });
   const oldSetup = app.setup;
@@ -28,17 +31,17 @@ export default function (app: Application): void {
     // Sync to the database
     
     app.set('sequelizeSync', sequelize.sync().then(() => {
-      console.log("Re-sync db whithout droping tables");
+        console.log("Re-sync db whithout droping tables");
     }));
     
     //database sync for dev context (droping tables)
     /*
     sequelize.sync({ force: true }).then(() => {
-      console.log("Drop and re-sync db.");
+        console.log("Drop and re-sync db.");
     });
     */
-
     return result;
 
   };
 }
+

@@ -60,7 +60,7 @@ export default function (app: Application): typeof Model {
     });
   
     users.hasMany(sequelizeClient.models.events, {
-      as : 'userEvents',
+      as : 'Events',
       sourceKey: 'uuid',
       foreignKey: {
         name : 'userUuid',

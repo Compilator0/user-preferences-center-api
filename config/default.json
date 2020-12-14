@@ -41,5 +41,6 @@
       "idle": 10000
     }
   },
-  "postgres": "postgres://postgres:didomi@localhost:5432/dev_consent_management_db"
+  "postgres": "postgres://postgres:didomi@localhost:5432/dev_consent_management_db",
+  "mysql": "mysql://gv:gv@localhost:3306/dev_consent_management_db"
 }
