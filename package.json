@@ -26,7 +26,6 @@
   "scripts": {
     "start": "npm run compile && node lib/",
     "test": "npm run lint && npm run compile && npm run mocha",
-    "prod": "npm run compile && node lib/",
     "lint": "eslint src/. test/. --config .eslintrc.json --ext .ts --fix",
     "dev": "ts-node-dev --no-notify src/",
     "mocha": "ts-mocha \"test/**/*.ts\" --recursive --exit",
