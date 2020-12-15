@@ -14,5 +14,4 @@ export function getDotEnv() : void {
     path = `${__dirname}/../../.env.development`;
   }
   dotenv.config({ path: path }); 
-  console.log('-------------------------------------------------------'+path);
 }

@@ -25,8 +25,8 @@ const addUUIDFieldOnUserData = () => {
     }; 
     //return the context as best practice
     return context;
-  }
-} 
+  };
+}; 
 
 /*
   User's email validity control at the business layer. 
@@ -34,13 +34,13 @@ const addUUIDFieldOnUserData = () => {
 */
 const controlsUsersEmailValidity = () => {
   return async (context: HookContext) => {
-      const { data } = context;
-      if( !emailIsValid(data.email) ) {
-          throw new UserInvalidEmail("The user's email is not a valid email", data.email);
-      }
-      return context;
+    const { data } = context;
+    if( !emailIsValid(data.email) ) {
+      throw new UserInvalidEmail('The user\'s email is not a valid email', data.email);
     }
-}
+    return context;
+  };
+};
 
 /*
   User's email unicity control at the business layer. 
@@ -53,15 +53,15 @@ const controlsUsersEmailUnicity = () => {
     //We use the user REST service to obtain the list of users in database 
     const listOfUser = await app.service('users').find(params);
     if(listOfUser.data){
-        if(listOfUser.data.length > 0){
-          if(listOfUser.data.some( (user: any) => user.email === data.email )){
-               throw new UserExistingEmail("This email is already used, please change it.", data.email);
-          }
+      if(listOfUser.data.length > 0){
+        if(listOfUser.data.some( (user: any) => user.email === data.email )){
+          throw new UserExistingEmail('This email is already used, please change it.', data.email);
         }
+      }
     }
     return context;
-  }
-} 
+  };
+}; 
 
 /*
   A function that will build the Outgoing user consent state into the format of this exercice
@@ -71,69 +71,55 @@ const consentStateBuilder =  () => {
 
   return async (context: HookContext) => {
     // Get `app`, `method` and `result` from the hook context
-    const { app, method, result, params } = context;
+    const { app, method, result } = context;
     // Function that adds the user consent state on every user returned by the find service of Users REST API
     const buildConsentState = async (currentUser: any) => {
-        // I get the user consent state by fetching the last event registered for each of his consent 
-        // I've designed a specific function for this stuff at the Users Class service Level : getUserConsentState(userUuid)
-        let consentState = await app.service('users').getUserConsentState(currentUser.uuid);
-        // Adding an array of consents to the current User
-        currentUser.consents = [];
-        consentState.forEach( (currentConsent: any) => {
-            currentUser.consents.push(currentConsent);
-        });
-        // Renaming the uuid field of the current User to match the field name to be displayed 
-        // and adding it as the first field of the object to return
-        currentUser = renameKey(currentUser, 'uuid', 'id');
-        currentUser = {
-          id: currentUser.id,
-          ...currentUser
-        };
-        // Removing from the current user, fields that should not be displayed
-        currentUser = deleteObjectFields(currentUser, 'createdAt', 'updatedAt');
-        // Removing limit_event_history field from user's consents
-        currentUser.consents.map( (consent: any) => deleteObjectFields(consent, 'limit_event_history'));
-        //The current user is then returned with his famous consent state (array of his last consents relative to each type of consent (email_notification, sms_notification, ...)))
-        return currentUser;
-   };
+      // I get the user consent state by fetching the last event registered for each of his consent 
+      // I've designed a specific function for this stuff at the Users Class service Level : getUserConsentState(userUuid)
+      const consentState = await app.service('users').getUserConsentState(currentUser.uuid);
+      // Adding an array of consents to the current User
+      currentUser.consents = [];
+      consentState.forEach( (currentConsent: any) => {
+        currentUser.consents.push(currentConsent);
+      });
+      // Renaming the uuid field of the current User to match the field name to be displayed 
+      // and adding it as the first field of the object to return
+      currentUser = renameKey(currentUser, 'uuid', 'id');
+      currentUser = {
+        id: currentUser.id,
+        ...currentUser
+      };
+      // Removing from the current user, fields that should not be displayed
+      currentUser = deleteObjectFields(currentUser, 'createdAt', 'updatedAt');
+      // Removing history_start_at field from user's consents
+      currentUser.consents.map( (consent: any) => deleteObjectFields(consent, 'history_start_at'));
+      //The current user is then returned with his famous consent state (array of his last consents relative to each type of consent (email_notification, sms_notification, ...)))
+      return currentUser;
+    };
    
-   if (method === 'find') {
-        if(result.data){
-             if(result.data.length > 0){
-                 // Map all Users from database to build Users consent state 
-                  context.result = await Promise.all(result.data.map(buildConsentState));
-              }
+    if (method === 'find') {
+      if(result.data){
+        if(result.data.length > 0){
+          // Map all Users from database to build Users consent state 
+          context.result = await Promise.all(result.data.map(buildConsentState));
         }
-   } else {
-        //Otherwise just update the single result
-        context.result = await buildConsentState(result);
-   } 
-   // We return the hook context
-   return context;
- }
-
-}
-
-
-/*
-  User's email unicity control at the business layer. 
-  If the email already exist then an error is thrown;
-*/
-const consentStateBuilderWithHistory = () => {
-  return async (context: HookContext) => {
-    //we obtain the app and the user's data from the Hook context
-    const { app, data, params } = context;
-
-    //hook.params.query.userId = hook.params.userId;
+      }
+    } else {
+      //Otherwise just update the single result
+      context.result = await buildConsentState(result);
+    } 
+    // We return the hook context
     return context;
-  }
-} 
+  };
+
+};
+
 
 
 export default {
   before: {
     all: [ authenticate('jwt') ],
-    find: [ consentStateBuilderWithHistory() ],
+    find: [],
     get: [],
     create: [ 
       addUUIDFieldOnUserData(), 

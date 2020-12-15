@@ -24,10 +24,6 @@ import { getDotEnv } from './env.config';
 //for environment variable management
 getDotEnv();
 
-//require('dotenv').config();
-//require('./utils/env.config')();
-
-
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const app: Application = express(feathers());
@@ -41,8 +37,8 @@ app.use(helmet({
 }));
 
 // Cross origin configuration
-let corsOptions = {
-  origin: "http://localhost:3030"
+const corsOptions = {
+  origin: 'http://localhost:3030'
 };
 app.use(cors(corsOptions));
 
@@ -73,6 +69,4 @@ app.use(express.errorHandler({ logger } as any));
 
 app.hooks(appHooks);
 
-
-//console.log(app.get('sequelizeClient').models);
 export default app;

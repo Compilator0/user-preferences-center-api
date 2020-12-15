@@ -3,7 +3,6 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
 import { Application } from '../declarations';
 import { HookReturn } from 'sequelize/types/lib/hooks';
-import { Users } from '../services/users/users.class';
 
 // A personnalized Model for the assiociation table inside of automatically generating it by Sequelize
 // resulting from the Many to Many relation between Users and Consent tables
@@ -35,7 +34,7 @@ export default function (app: Application): typeof Model {
       validate: {
         isIn: {
           args: [['email_notifications', 'sms_notifications']],
-          msg: "Must be 'email_notifications' or 'sms_notifications'"
+          msg: 'Must be \'email_notifications\' or \'sms_notifications\''
         },
         notNull: {
           msg: 'A consent id is mandatory'
@@ -84,7 +83,7 @@ export default function (app: Application): typeof Model {
   (events as any).associate = function (models: any): void {
     // Defining associations 
     events.belongsTo(sequelizeClient.models.users, {
-        targetKey: 'uuid'
+      targetKey: 'uuid'
     });
 
   };

@@ -32,7 +32,7 @@ export default function (app: Application): void {
     // Sync to the database
     
     app.set('sequelizeSync', sequelize.sync().then(() => {
-        console.log("Re-sync db whithout droping tables");
+      console.log('Re-sync db whithout droping tables');
     }));
     
     //database sync for dev context (droping tables)
