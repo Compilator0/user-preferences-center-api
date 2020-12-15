@@ -18,7 +18,16 @@ export class UsersHistory extends Service implements UsersHistoryServiceInterfac
     <<
         SELECT 
             e1.consent_label as id, 
-            e1.consent_decision as enabled
+            e1.consent_decision as enabled,
+            (
+              SELECT COUNT(*)
+              FROM (
+                    SELECT * FROM events ev
+                    WHERE ev.user_uuid = $uuid
+                    GROUP BY ev.consent_label
+                   ) 
+                   sub_events
+            ) as history_start_at
         FROM events e1 
         WHERE e1.user_uuid = $uuid
         AND e1.created_at = (

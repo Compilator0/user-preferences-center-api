@@ -153,15 +153,15 @@ Getting up and running is as easy as 1, 2, 3.
                     }
 
                 ```  
-            The application will then insert the new user into the database after :     
-                    -   Generating a UUID for the user 
-                    -   Contolling that the email is valid 
-                    -   Controling that email is not already registered in the system
+            The service will then insert the new user into the database after :     
+                -   Generating a UUID for the user 
+                -   Contolling that the email is valid (if not OK, the API throws a 422 status code from a custom User error handler)
+                -   Controling that the mail is not already registered in the database
 
-            You'll then observe the User consent statut in the API reponse as the example below :
-            In the API reponse, you can observe the current consent status of the User as the example below :
-
+            You'll then observe the 'User consent statut' in the API reponse as the example below :
+        
                 ```
+                    GET on http://localhost:3030/users/a2079b1a-ccdc-474d-860f-49741c262edc
                     {
                         "id": "a2079b1a-ccdc-474d-860f-49741c262edc",
                         "email": "idris.tsafack@didomi.com",
@@ -169,52 +169,197 @@ Getting up and running is as easy as 1, 2, 3.
                     }
 
                 ```
-            
-
-        9.2.2 Observe the user current statut by a GET request as the example below :
-            You can also obtain the above reponse by a GET request on 
+        9.2.2 Also observe that user current statut by a 'GET' request as the example below :
             http://localhost:3030/users/a2079b1a-ccdc-474d-860f-49741c262edc
 
-        9.2.3 You can Update the User data by a PUT or PATCH request on 
+        9.2.3 You can visualize the list Users in the database by a 'GET' request à the ressource below :
+            http://localhost:3030/users
+
+        9.2.4 You can Update the User data by a 'PUT' or 'PATCH' request on 
             http://localhost:3030/users/a2079b1a-ccdc-474d-860f-49741c262edc
         
-        9.2.3 You can delete the User from the database by a DELETE request on 
+        9.2.5 You can delete the User from the database by a 'DELETE' request on 
             http://localhost:3030/users/a2079b1a-ccdc-474d-860f-49741c262edc
 
 
 9.3 The Events web service
 
      ```
-    /users 
+    /events 
 
     ```
-        Create an event containing the user consent by POSTING a JSON object as the example below :
+        9.3.1 Create 2 events relative to the same User consent by POSTING a JSON object as the example below :
                 ```
-                    POST on http://localhost:3030/authentication
+                    POST http://localhost:3030/events 
                     {
-                        "email": "idris.tsafack@didomi.com"
+                        "user": {
+                            "id": "a2079b1a-ccdc-474d-860f-49741c262edc"
+                        },
+                        "consents": [
+                            {
+                            "id": "email_notifications",
+                            "enabled": true
+                            }
+                        ]
                     }
 
+                    POST http://localhost:3030/events 
+                    {
+                        "user": {
+                            "id": "a2079b1a-ccdc-474d-860f-49741c262edc"
+                        },
+                        "consents": [
+                            {
+                                "id": "email_notifications",
+                                "enabled": false
+                            },
+                            {
+                                "id": "sms_notifications",
+                                "enabled": true
+                            }                            
+                        ]
+                    }
                 ```  
+                For each of those POST request the API will return the events persisted formated as above.
+                After sendind sequentially those 2 request to the same user, the user consent will become :
+
+                ```
+                    GET on http://localhost:3030/users/a2079b1a-ccdc-474d-860f-49741c262edc
+                    {
+                        "id": "a2079b1a-ccdc-474d-860f-49741c262edc",
+                        "email": "idris.tsafack@didomi.com",
+                        "consents": [
+                            {
+                                "id": "email_notifications",
+                                "enabled": false
+                            },
+                            {
+                                "id": "sms_notifications",
+                                "enabled": true
+                            }                            
+                        ]
+                    }
+
+                ```       
+        
+        9.3.2 Also observe that event in that format by a 'GET' request as the example below chere the number '1' represents the id of the event :
+            http://localhost:3030/users/1
+
+        9.2.3 You can visualize the list events in the database by a 'GET' request à the ressource below :
+            http://localhost:3030/events
+
+        9.2.4 You can not Update the event as is forbidden by this exercice, every tentation will ends on a 405 stauts error from a custom Event error handler 
+        
+        9.2.4 You can not Delete the event as is forbidden by this exercice, every tentation will ends on a 405 stauts error from a custom Event error handler
+        
+
 9.4 The users events history web service
 
      ```
     /users-history 
 
     ```
+        This is a Feathers 'custom service' sharing the same Node package as 'users service' and dealing with only 2 services.
+        All the events of a user not dealing with his current status are related to the User events history and stored in the database. 
+        => Note that in the users events history list, there is a field called 'history_start_at' wich is a number that determines the number from wich start the events that aren't related to the current user's consent status.
+
+        Below is an example of the events list :
+
+         ```
+            GET ON http://localhost:3030/users-history
+
+            [
+                {
+                    "id": "24455acd-e0e7-44c4-804f-21e6e9a397a4",
+                    "email": "compilator.tsafack@didomi.com",
+                    "history_start_at": 3,
+                    "consents": [
+                        {
+                            "id": "email_notifications",
+                            "enabled": false,
+                            "created_at": "2020-12-15T07:12:11.000Z"
+                        },
+                        {
+                            "id": "sms_notifications",
+                            "enabled": true,
+                            "created_at": "2020-12-15T07:12:11.000Z"
+                        },
+                        {
+                            "id": "email_notifications",
+                            "enabled": true,
+                            "created_at": "2020-12-15T07:12:01.000Z"
+                        }
+                    ]
+                },
+                {
+                    "id": "6145dafb-aef2-447d-b415-ebfdbb5bb416",
+                    "email": "compi.tsafack@didomi.com",
+                    "history_start_at": 3,
+                    "consents": [
+                        {
+                            "id": "email_notifications",
+                            "enabled": true,
+                            "created_at": "2020-12-15T01:22:20.000Z"
+                        },
+                        {
+                            "id": "sms_notifications",
+                            "enabled": false,
+                            "created_at": "2020-12-15T01:22:20.000Z"
+                        },
+                        {
+                            "id": "6c8ebe8b-7009-4518-b68c-527c091f1c3a",
+                            "email": "idris@teranova.com",
+                            "consents": []
+                        },
+                        {
+                            "id": "a2079b1a-ccdc-474d-860f-49741c262edc",
+                            "email": "idris.tsafack@didomi.com",
+                            "consents": []
+                        },
+                        {
+                            "id": "b942285c-7496-47c3-aca6-49db02d93003",
+                            "email": "idriss.tsafack@didomi.com",
+                            "consents": []
+                        }
+                    ]
+                }
+            ]
+
+         ```
 
 
+10. Testing
 
-## Testing
-I've written some test in the application with Mocha. Feel free to run some units test in App, it's simple since I've well configured the command lines needed in the 'package.json' application's file.
+        I've written some unit to conclude this challenge, tests are done with Mocha. 
+        Feel free to run some units test in the App, it's simple since I've well configured the command lines needed in the 'package.json' application's file.
 
-To tun unit tests, simply run the command below :
- run `npm test` and all the tests in the `test/` directory will be run.
+        To run unit tests, simply run the command below and all the tests files in the `test/` directory will be run.
+
+        ```
+            run `npm test` 
+
+        ```
+        
+        These are some features for wich unit tests are implemented :
+
+            -   All web services registration
+            -   Local strategy authentication test
+            -   API users authentication and accessToken creation
+            -   The application starter
+            -   starts and shows the index page
+            -   JSON 404 error without stack trace
+
+
+11. Code coverage
+
+    Code coverage is a great way to get some insights into how much of our code is actually executed during the tests. Using 'Istanbul' I've add it to project.
+    
+    To execute run the code coverage tool run the same command as above, you see a dashboard at the end of the test, illustrating code coverage.
+
 
 
 Thanks for reading.
 I'm opened to a possible code review and peer to peer programming with you.
-
 
 Cheers !
 
