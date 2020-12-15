@@ -29,18 +29,8 @@ export default function (app: Application): typeof Model {
           msg: 'A consent id is mandatory'
         }
       }
-    },
-    consentDecision: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      unique: 'consentUnicityConstraint',
-      validate: {
-        notNull: {
-          msg: 'A decision must be taken reltive to a consent'
-        }
-      }
     }
-    //2 fileds will be automatically added by sequelize : createdAt and updatedAt  
+    //2 fields will be automatically added by sequelize : createdAt and updatedAt  
   }, {
     hooks: {
       beforeCount(options: any): HookReturn {
@@ -51,7 +41,8 @@ export default function (app: Application): typeof Model {
   
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   (consent as any).associate = function (models: any): void {
-    // Defining associations 
+    // Many to many relation between Consent and Users 
+    /*
     consent.belongsToMany(sequelizeClient.models.users, { 
       sourceKey: 'id', 
       targetKey: 'uuid',
@@ -65,6 +56,7 @@ export default function (app: Application): typeof Model {
         unique: false 
       }
     });
+    */
   };
 
   return consent;

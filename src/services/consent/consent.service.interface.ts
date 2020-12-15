@@ -9,7 +9,7 @@ export interface ConsentServiceInterface {
         Returning the data of a Consent, using the consent model.
         The consent to return must match the 2 criteria passed as parameters
     */
-    getConsentFromLabelAndDecision(consentLabel: string, consentDecision: string) : Object;
+    getConsentFromLabelAndDecision(consentLabel: string) : Object;
 
 }
 

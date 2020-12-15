@@ -65,10 +65,9 @@ const controlsUsersEmailUnicity = () => {
 } 
 
 /*
-  An anonymous function that will build the Outgoing user consent state into the format of this exercice
-  It will be called after after every User service request result to ensure the user is returned in the format needed 
+  A function that will build the Outgoing user consent state into the format of this exercice
+  It will be called "after" every a User service request to ensure the user is returned in the format needed 
 */
-
 const consentStateBuilder =  () => {
 
   return async (context: HookContext) => {
@@ -78,34 +77,29 @@ const consentStateBuilder =  () => {
     // Function that adds the user consent state on every user returned by the find service of Users REST API
     const buildConsentState = async (currentUser: any) => {
         // I get the user consent state by fetching the last event registered for each of his consent 
-        // I've designed a specific function for this stuff at the User's Class service Level
-        console.log('beforeqsqsazzzzzzeeeeeeeeeeeeeeeeeeeeeeeeee')
-        console.log(currentUser);
+        // I've designed a specific function for this stuff at the Users Class service Level : getUserConsentState(userUuid)
         let consentState = await app.service('users').getUserConsentState(currentUser.uuid);
-        console.log('qsqsazzzzzzeeeeeeeeeeeeeeeeeeeeeeeeee')
-        console.log(consentState);
-        currentUser.consents = [];
         // Adding an array of consents to the current User
+        currentUser.consents = [];
         consentState.forEach( (currentConsent: any) => {
             currentUser.consents.push(currentConsent);
         });
-        console.log('preaftereqsqsazzzzzzeeeeeeeeeeeeeeeeeeeeeeeeee')
-        console.log(currentUser);
-        // Renaming the uuid field of the current User to match the field name to be printed
+        // Renaming the uuid field of the current User to match the field name to be displayed 
+        // and adding it as the first field of the object to return
         currentUser = renameKey(currentUser, 'uuid', 'id');
         currentUser = {
           id: currentUser.id,
           ...currentUser
         };
-        // Removing from the current user fields that should be sent
-        console.log('EndpreaftereEndqsqsazzzzzzeeeeeeeeeeeeeeeeeeeeeeeeee')
-        console.log(currentUser);
+        console.log('cresultqEndENdpreaftereqsqsazzzzzzeeeeeeeeeeeeeeeeeeeeeeeeee')
+        console.log(currentUser); 
+        // Removing from the current user, fields that should not be displayed
         currentUser = deleteObjectFields(currentUser, 'createdAt', 'updatedAt');
-       //The current user is then returned with his famous consent state (array of consents))
-       console.log('EndENdpreaftereqsqsazzzzzzeeeeeeeeeeeeeeeeeeeeeeeeee')
-       console.log(currentUser);
-       return currentUser;
-    };
+        // Removing limit_event_history field from user's consents
+        currentUser.consents.map( (consent: any) => deleteObjectFields(consent, 'limit_event_history'));
+        //The current user is then returned with his famous consent state (array of his last consents relative to each type of consent (email_notification, sms_notification, ...)))
+        return currentUser;
+   };
    
    if (method === 'find') {
         if(result.data){

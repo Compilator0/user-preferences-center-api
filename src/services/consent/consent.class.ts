@@ -14,13 +14,12 @@ export class Consent extends Service  implements ConsentServiceInterface {
     Returning the data of a Consent, using the consent model inside of using the consent service default REST methods,
     because we don't want them to trigger the pre and post Hooks methods of consent service
   */
-  async getConsentFromLabelAndDecision(consentLabel: string, consentDecision: string) {
+  async getConsentFromLabelAndDecision(consentLabel: string) {
     // Getting the consent Model
     const ConsentModel = app.get('sequelizeClient').models.consent;
     return (await ConsentModel.findOne({
       where: { 
-        consent_label: consentLabel,
-        consent_decision: consentDecision
+        consent_label: consentLabel
       }
     })).toJSON();
   } 

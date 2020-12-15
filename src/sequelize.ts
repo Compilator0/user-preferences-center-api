@@ -11,7 +11,8 @@ export default function (app: Application): void {
       //I've observed that without specifying this attribute 
       //the consent Id in the event table was unknown by postgres on CRUD request, but was kown by mysql.  
       underscored: true
-    }
+    },
+    query: {  raw: false  }
   });
   const oldSetup = app.setup;
 

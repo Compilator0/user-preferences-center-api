@@ -5,9 +5,14 @@
  */
 export interface EventsServiceInterface {
     /*
-        Returning the list of consent data corresponding to a specific event
+        Getting a list of events registered in the same transaction by a user
     */
-   getFormatedEvent(userUuid: string): Object; 
+    getEventsByUserAndDate(event : any): Promise<any | any[]>;
+
+    /*
+        Getting a list of events group by 'created_at'
+    */
+   getEventsGroupByCreatedAt(): Promise<any | any[]> 
    
 }
 

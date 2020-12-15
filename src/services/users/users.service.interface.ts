@@ -5,10 +5,16 @@
  */
 export interface UsersServiceInterface {
     /**
-     * Retrieve the consent state of a given User
-     * returns the users consent state
+     * Retrieves the consent state of a given User
+     * returns the users consent state 
      */
-    getUserConsentState(userUUID: any) : Object;
+    getUserConsentState(userUUID: any) : Promise<any | any[]>;
+
+    /**
+     * Retrieves the consent state history of a given User
+     * returns the users consent states history of events
+     */
+    getUserConsentState(userUUID: any) : Promise<any | any[]>;
 
 }
 

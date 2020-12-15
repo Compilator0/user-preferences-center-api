@@ -41,7 +41,7 @@ export default {
   },
 
   error: {
-    all: [ errorHandler ],
+    all: [  ],
     find: [],
     get: [],
     create: [],
