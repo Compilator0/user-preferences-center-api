@@ -54,7 +54,6 @@ const controlsUsersEmailUnicity = () => {
     const listOfUser = await app.service('users').find(params);
     if(listOfUser.data){
         if(listOfUser.data.length > 0){
-          console.log(context);
           if(listOfUser.data.some( (user: any) => user.email === data.email )){
                throw new UserExistingEmail("This email is already used, please change it.", data.email);
           }
@@ -72,8 +71,7 @@ const consentStateBuilder =  () => {
 
   return async (context: HookContext) => {
     // Get `app`, `method` and `result` from the hook context
-    const { app, method, result } = context;
-
+    const { app, method, result, params } = context;
     // Function that adds the user consent state on every user returned by the find service of Users REST API
     const buildConsentState = async (currentUser: any) => {
         // I get the user consent state by fetching the last event registered for each of his consent 
@@ -91,8 +89,6 @@ const consentStateBuilder =  () => {
           id: currentUser.id,
           ...currentUser
         };
-        console.log('cresultqEndENdpreaftereqsqsazzzzzzeeeeeeeeeeeeeeeeeeeeeeeeee')
-        console.log(currentUser); 
         // Removing from the current user, fields that should not be displayed
         currentUser = deleteObjectFields(currentUser, 'createdAt', 'updatedAt');
         // Removing limit_event_history field from user's consents
@@ -119,10 +115,25 @@ const consentStateBuilder =  () => {
 }
 
 
+/*
+  User's email unicity control at the business layer. 
+  If the email already exist then an error is thrown;
+*/
+const consentStateBuilderWithHistory = () => {
+  return async (context: HookContext) => {
+    //we obtain the app and the user's data from the Hook context
+    const { app, data, params } = context;
+
+    //hook.params.query.userId = hook.params.userId;
+    return context;
+  }
+} 
+
+
 export default {
   before: {
     all: [ authenticate('jwt') ],
-    find: [],
+    find: [ consentStateBuilderWithHistory() ],
     get: [],
     create: [ 
       addUUIDFieldOnUserData(), 
