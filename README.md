@@ -203,16 +203,16 @@ Getting up and running is as easy as 1, 2, 3.
 
                 ```
 
-        9.2.2 Also observe that user current statut by a 'GET' request as the example below :
+    9.2.2 Also observe that user current statut by a 'GET' request as the example below :
             http://localhost:3030/users/a2079b1a-ccdc-474d-860f-49741c262edc
 
-        9.2.3 You can visualize the list Users in the database by a 'GET' request à the ressource below :
+    9.2.3 You can visualize the list Users in the database by a 'GET' request à the ressource below :
             http://localhost:3030/users
 
-        9.2.4 You can Update the User data by a 'PUT' or 'PATCH' request on 
+    9.2.4 You can Update the User data by a 'PUT' or 'PATCH' request on 
             http://localhost:3030/users/a2079b1a-ccdc-474d-860f-49741c262edc
         
-        9.2.5 You can delete the User from the database by a 'DELETE' request on 
+    9.2.5 You can delete the User from the database by a 'DELETE' request on 
             http://localhost:3030/users/a2079b1a-ccdc-474d-860f-49741c262edc
 
 
