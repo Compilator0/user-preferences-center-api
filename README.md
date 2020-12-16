@@ -8,16 +8,17 @@ I've developed this securized API in the context of this chalenge :
 
 https://github.com/didomi/challenges/tree/master/backend
 
-Continue reading and you'll have the information you need set up your local environement and run the App.
+Continue reading and you'll have the information you need to set up your local environement and run the securized API.
 
 ## Technologies
 
 What have I use to develop the API ?
-    -   Typescript/Node.js : this is a Typescript app
-    -   Feathers : a JS open source web framework for building modern real-time applications
-    -   Express.js
-    -   Sequelise ORM : I've defined schema of tables with Typescript code, so that the application should be able to work with any of these databases : Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server.
-    -   MySQL : I've done my tests on MySQL, feel free to use any other Database supported by the ORM Sequelise
+-   Typescript/Node.js : this is a Typescript app
+-   Feathers : a JS open source web framework for building modern real-time applications
+-   Express.js
+-   Sequelise ORM : I've defined schema of tables with Typescript code, so that the application should 
+be able to work with any of these databases : Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server.
+-   MySQL : I've done my tests on MySQL, feel free to use any other Database supported by the ORM Sequelise
 
 ## Features
     - I've covered the entire features to be develop for the context of the challenge, feel free to use a client of your choice and exchange data with the API.
@@ -91,6 +92,7 @@ Getting up and running is as easy as 1, 2, 3.
 
 
 8.  Enjoy the App by using these main web services with a API client tool.
+
     ```
     '/users' ,  '/events' , '/users-events-history' 
 
@@ -99,7 +101,7 @@ Getting up and running is as easy as 1, 2, 3.
         Postman download link : https://www.postman.com/downloads/
 
 
-9. Tutorial
+9. API Tutorial
     
     9.1 The API authentication web service for security
 
@@ -110,6 +112,7 @@ Getting up and running is as easy as 1, 2, 3.
     Use this service to get a JWT token that you'll need to be authenticated by the API server, else your HTTP request to the app web services will fail. It's easy to that, keep reading.
     
     9.1.1 Create your API user account by sending a post request via your API client tool, to this endpoint with a JSON object containing your credentials.
+
         Example :
             ```
                 POST on http://localhost:3030/api-users
@@ -123,6 +126,7 @@ Getting up and running is as easy as 1, 2, 3.
     9.1.2 Then use your account to get a JwT Token by using the service at the below API's endpoint, by doing another POST request to the web service /authentication with a JSON object containing your credentials created above including the authentication strategy.     
         Example :  
     
+
             ```
                 POST on http://localhost:3030/authentication
 
@@ -133,6 +137,7 @@ Getting up and running is as easy as 1, 2, 3.
                 }
 
             ```    
+
     Look at the server response on the API client tool and copy the value of the field 'accessToken'. Finally configure your API client tool to user this JwT Token as 'Bearer Token' to be included in the header of all the HTTP request you'll noww send to the application. You shall need to renew your JwT token since it will expire after 24H.
 
     Feel happy as you can now use access the 3 main services of the API application.
@@ -141,11 +146,14 @@ Getting up and running is as easy as 1, 2, 3.
 
 9.2 The Users web service
 
+
      ```
     /users 
 
     ```
+
         9.2.1 Create a user by POSTING a JSON object as the example below :
+
                 ```
                     POST on http://localhost:3030/users
                     {
@@ -153,12 +161,14 @@ Getting up and running is as easy as 1, 2, 3.
                     }
 
                 ```  
+
             The service will then insert the new user into the database after :     
                 -   Generating a UUID for the user 
                 -   Contolling that the email is valid (if not OK, the API throws a 422 status code from a custom User error handler)
                 -   Controling that the mail is not already registered in the database
 
             You'll then observe the 'User consent statut' in the API reponse as the example below :
+
         
                 ```
                     GET on http://localhost:3030/users/a2079b1a-ccdc-474d-860f-49741c262edc
@@ -169,6 +179,7 @@ Getting up and running is as easy as 1, 2, 3.
                     }
 
                 ```
+
         9.2.2 Also observe that user current statut by a 'GET' request as the example below :
             http://localhost:3030/users/a2079b1a-ccdc-474d-860f-49741c262edc
 
