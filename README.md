@@ -141,9 +141,9 @@ Getting up and running is as easy as 1, 2, 3.
             ```
 
     9.1.2 Then use your account to get a JwT Token by using the service at the below API's endpoint, by doing another POST request to the web service /authentication with a JSON object containing your credentials created above including the authentication strategy.     
-        Example :  
     
-
+    Example :  
+    
             ```
                 POST on http://localhost:3030/authentication
 
