@@ -216,11 +216,10 @@ Getting up and running is as easy as 1, 2, 3.
 
 
 9.3 The Events web service
-
      ```
     /events 
-
     ```
+    
         9.3.1 Create 2 events relative to the same User consent by POSTING a JSON object as the example below :
 
                 ```
