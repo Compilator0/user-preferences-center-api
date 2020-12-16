@@ -171,10 +171,9 @@ Getting up and running is as easy as 1, 2, 3.
     9.1.3
 
 9.2 The Users web service
+
     ```
-
     /users 
-
     ```
 
         9.2.1 Create a user by POSTING a JSON object as the example below :
@@ -225,6 +224,7 @@ Getting up and running is as easy as 1, 2, 3.
 
     ```
         9.3.1 Create 2 events relative to the same User consent by POSTING a JSON object as the example below :
+
                 ```
                     POST http://localhost:3030/events 
                     {
@@ -256,8 +256,10 @@ Getting up and running is as easy as 1, 2, 3.
                         ]
                     }
                 ```  
+
                 For each of those POST request the API will return the events persisted formated as above.
                 After sendind sequentially those 2 request to the same user, the user consent will become :
+
 
                 ```
                     GET on http://localhost:3030/users/a2079b1a-ccdc-474d-860f-49741c262edc
@@ -275,7 +277,6 @@ Getting up and running is as easy as 1, 2, 3.
                             }                            
                         ]
                     }
-
                 ```       
         
         9.3.2 Also observe that event in that format by a 'GET' request as the example below chere the number '1' represents the id of the event :
@@ -291,15 +292,17 @@ Getting up and running is as easy as 1, 2, 3.
 
 9.4 The users events history web service
 
+
      ```
     /users-history 
-
     ```
+        
         This is a Feathers 'custom service' sharing the same Node package as 'users service' and dealing with only 2 services.
         All the events of a user not dealing with his current status are related to the User events history and stored in the database. 
         => Note that in the users events history list, there is a field called 'history_start_at' wich is a number that determines the number from wich start the events that aren't related to the current user's consent status.
 
         Below is an example of the events list :
+        
 
          ```
             GET ON http://localhost:3030/users-history
