@@ -130,7 +130,8 @@ Getting up and running is as easy as 1, 2, 3.
     
     9.1.1 Create your API user account by sending a post request via your API client tool, to this endpoint with a JSON object containing your credentials.
 
-        Example :
+    Example :
+    
             ```
                 POST on http://localhost:3030/api-users
                 {
