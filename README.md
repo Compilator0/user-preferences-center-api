@@ -221,7 +221,7 @@ Getting up and running is as easy as 1, 2, 3.
     /events 
     ```    
 
-        9.3.1 Create 2 events relative to the same User consent by POSTING a JSON object as the example below :
+    9.3.1 Create 2 events relative to the same User consent by POSTING a JSON object as the example below :
 
                 ```
                     POST http://localhost:3030/events 
@@ -277,15 +277,15 @@ Getting up and running is as easy as 1, 2, 3.
                     }
                 ```       
         
-        9.3.2 Also observe that event in that format by a 'GET' request as the example below chere the number '1' represents the id of the event :
+    9.3.2 Also observe that event in that format by a 'GET' request as the example below chere the number '1' represents the id of the event :
             http://localhost:3030/users/1
 
-        9.2.3 You can visualize the list events in the database by a 'GET' request à the ressource below :
+    9.2.3 You can visualize the list events in the database by a 'GET' request à the ressource below :
             http://localhost:3030/events
 
-        9.2.4 You can not Update the event as is forbidden by this exercice, every tentation will ends on a 405 stauts error from a custom Event error handler 
+    9.2.4 You can not Update the event as is forbidden by this exercice, every tentation will ends on a 405 stauts error from a custom Event error handler 
         
-        9.2.4 You can not Delete the event as is forbidden by this exercice, every tentation will ends on a 405 stauts error from a custom Event error handler
+    9.2.4 You can not Delete the event as is forbidden by this exercice, every tentation will ends on a 405 stauts error from a custom Event error handler
         
 
     9.4 The users events history web service
