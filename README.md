@@ -160,12 +160,11 @@ Getting up and running is as easy as 1, 2, 3.
     Look at the server response on the API client tool and copy the value of the field 'accessToken'. Finally configure your API client tool to user this JwT Token as 'Bearer Token' to be included in the header of all the HTTP request you'll noww send to the application. You shall need to renew your JwT token since it will expire after 24H.
     Belew is an example of an 'accesToken' :
 
-            ```
-                {
-                    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyJ9.eyJpYXQiOjE2MDgxMzE1ODksImV4cCI6MTYwODIxNzk4OSwiYXVkIjoiaHR0cHM6Ly95b3VyZG9tYWluLmNvbSIsImlzcyI6ImZlYXRoZXJzIiwic3ViIjoiNyIsImp0aSI6IjRjZWYzOTI3LTU4MGUtNGI4YS1hZjQ2LTVmZGJkODVhZmRhOCJ9.nR5R4iBoxvBNQxHaMD3n1WHZoaS1KvsdADJ8iNuTtJI"
-                }    
+            
+        {
+            "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyJ9.eyJpYXQiOjE2MDgxMzE1ODksImV4cCI6MTYwODIxNzk4OSwiYXVkIjoiaHR0cHM6Ly95b3VyZG9tYWluLmNvbSIsImlzcyI6ImZlYXRoZXJzIiwic3ViIjoiNyIsImp0aSI6IjRjZWYzOTI3LTU4MGUtNGI4YS1hZjQ2LTVmZGJkODVhZmRhOCJ9.nR5R4iBoxvBNQxHaMD3n1WHZoaS1KvsdADJ8iNuTtJI"
+        }    
 
-            ```
 
     Feel happy as you can now use access the 3 main services of the API application.
 
