@@ -105,8 +105,17 @@ Getting up and running is as easy as 1, 2, 3.
     '/users' ,  '/events' , '/users-events-history' 
 
     ```    
-        The API Client tool I've used is 'Postman', feel free to choose your favorite API client tool.
-        Postman download link : https://www.postman.com/downloads/
+       
+    And this web services for the API's client authentication process :
+
+    ```
+    '/api-users' ,  '/authentication' 
+
+    ```    
+
+
+    The API Client tool I've used is 'Postman', feel free to choose your favorite API client tool.
+    Postman download link : https://www.postman.com/downloads/
 
 
 9. API Tutorial
@@ -118,6 +127,7 @@ Getting up and running is as easy as 1, 2, 3.
     /api-users 
 
     ```
+
     Use this service to get a JWT token that you'll need to be authenticated by the API server, else your HTTP request to the app web services will fail. It's easy to that, keep reading.
     
     9.1.1 Create your API user account by sending a post request via your API client tool, to this endpoint with a JSON object containing your credentials.
@@ -148,6 +158,14 @@ Getting up and running is as easy as 1, 2, 3.
             ```    
 
     Look at the server response on the API client tool and copy the value of the field 'accessToken'. Finally configure your API client tool to user this JwT Token as 'Bearer Token' to be included in the header of all the HTTP request you'll noww send to the application. You shall need to renew your JwT token since it will expire after 24H.
+    Belew is an example of an 'accesToken' :
+
+            ```
+                {
+                    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyJ9.eyJpYXQiOjE2MDgxMzE1ODksImV4cCI6MTYwODIxNzk4OSwiYXVkIjoiaHR0cHM6Ly95b3VyZG9tYWluLmNvbSIsImlzcyI6ImZlYXRoZXJzIiwic3ViIjoiNyIsImp0aSI6IjRjZWYzOTI3LTU4MGUtNGI4YS1hZjQ2LTVmZGJkODVhZmRhOCJ9.nR5R4iBoxvBNQxHaMD3n1WHZoaS1KvsdADJ8iNuTtJI"
+                }    
+
+            ```
 
     Feel happy as you can now use access the 3 main services of the API application.
 
