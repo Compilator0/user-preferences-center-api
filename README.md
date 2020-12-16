@@ -173,10 +173,9 @@ Getting up and running is as easy as 1, 2, 3.
 9.2 The Users web service
 
 
-     ```
     /users 
 
-    ```
+
 
         9.2.1 Create a user by POSTING a JSON object as the example below :
 
