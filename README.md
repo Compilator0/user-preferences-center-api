@@ -288,6 +288,7 @@ Getting up and running is as easy as 1, 2, 3.
     9.2.4 You can not Delete the event as is forbidden by this exercice, every tentation will ends on a 405 stauts error from a custom Event error handler
         
 
+
     9.4 The users events history web service
 
 
