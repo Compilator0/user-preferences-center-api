@@ -18,10 +18,12 @@ What have I use to develop the API ?
 -   Express.js
 -   Sequelise ORM : I've defined schema of tables with Typescript code, so that the application should 
 be able to work with any of these databases : Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server.
--   MySQL : I've done my tests on MySQL, feel free to use any other Database supported by the ORM Sequelise
+-   MySQL : I've done my tests on MySQL, feel free to use any other Database supported by the Sequelise ORM
 
 ## Features
-    - I've covered the entire features to be develop for the context of the challenge, feel free to use a client of your choice and exchange data with the API.
+
+    - I've covered the entire features to be develop for the context of the challenge, 
+      feel free to use a client of your choice and exchange data with the API.
     - I've added 2 other features :
         -   API security by JWT token, as local strategy (login/paasword)
         -   Event history of users and their consents  
@@ -34,7 +36,8 @@ Getting up and running is as easy as 1, 2, 3.
 
 1. Install your favorite IDE (I've used VS Scode)
 
-2. Make sure you install [NodeJS](https://nodejs.org/) and [npm](https://www.npmjs.com/) 
+2. Make sure you install [NodeJS](https://nodejs.org/) and [npm](https://www.npmjs.com/)
+
     I've used Node v14.15.1 
     It comes with npm v6.14.8
     Download link : https://nodejs.org/en/
@@ -47,7 +50,9 @@ Getting up and running is as easy as 1, 2, 3.
 
 4. Start your IDE and use it to open the folder containing the application you donwload
 
-5. Run IDE Terminal and use it get into the application's folder path.
+
+5. Run IDE Terminal and use it get into the application's folder path
+
    Install the application dependencies by running the command below :
 
     ```
@@ -66,7 +71,9 @@ Getting up and running is as easy as 1, 2, 3.
     
     Note that if you run or not those SQL scripts the application with generate for free :) a database for you, the tables will be empty and you'll have to fill them via the API web services.
 
+
 7. Configure and Start the app 
+
     In the project's folder open the JSON file at /config/default.json and configure it according to your needs.
     A very important field has to be created to define credentials needed by the application to communicate with the MySQL database.
 
@@ -93,6 +100,7 @@ Getting up and running is as easy as 1, 2, 3.
 
 8.  Enjoy the App by using these main web services with a API client tool.
 
+
     ```
     '/users' ,  '/events' , '/users-events-history' 
 
@@ -104,6 +112,7 @@ Getting up and running is as easy as 1, 2, 3.
 9. API Tutorial
     
     9.1 The API authentication web service for security
+    
 
     ```
     /api-users 
