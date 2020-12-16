@@ -93,9 +93,9 @@ Getting up and running is as easy as 1, 2, 3.
     
     Finally start the app by using command below to run on your development environment :
 
-        ```
+        
         NODE_ENV=development npm start
-        ```
+        
 
 
 8.  Enjoy the App by using these main web services with a API client tool.
@@ -337,30 +337,35 @@ Getting up and running is as easy as 1, 2, 3.
                     "consents": [
                         {
                             "id": "email_notifications",
-                            "enabled": true,
-                            "created_at": "2020-12-15T01:22:20.000Z"
+                            "enabled": false,
+                            "created_at": "2020-12-16T19:57:22.000Z"
                         },
                         {
                             "id": "sms_notifications",
                             "enabled": false,
+                            "created_at": "2020-12-16T19:57:22.000Z"
+                        },
+                        {
+                            "id": "sms_notifications",
+                            "enabled": true,
+                            "created_at": "2020-12-16T19:56:10.000Z"
+                        },
+                        {
+                            "id": "email_notifications",
+                            "enabled": true,
                             "created_at": "2020-12-15T01:22:20.000Z"
-                        },
-                        {
-                            "id": "6c8ebe8b-7009-4518-b68c-527c091f1c3a",
-                            "email": "idris@teranova.com",
-                            "consents": []
-                        },
-                        {
-                            "id": "a2079b1a-ccdc-474d-860f-49741c262edc",
-                            "email": "idris.tsafack@didomi.com",
-                            "consents": []
-                        },
-                        {
-                            "id": "b942285c-7496-47c3-aca6-49db02d93003",
-                            "email": "idriss.tsafack@didomi.com",
-                            "consents": []
                         }
                     ]
+                },
+                {
+                    "id": "de600dab-0d71-4582-8b07-51f7c2357833",
+                    "email": "test@yahoo.fr",
+                    "consents": []
+                },
+                {
+                    "id": "f9b3b0a4-81df-4bbb-9760-4791271941b8",
+                    "email": "someone@example.com",
+                    "consents": []
                 }
             ]
 
