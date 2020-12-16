@@ -121,8 +121,6 @@ Getting up and running is as easy as 1, 2, 3.
 9. API Tutorial
     
     9.1 The API authentication web service for security
-    
-
     ```
     /api-users 
 
@@ -302,7 +300,7 @@ Getting up and running is as easy as 1, 2, 3.
         => Note that in the users events history list, there is a field called 'history_start_at' wich is a number that determines the number from wich start the events that aren't related to the current user's consent status.
 
         Below is an example of the events list :
-        
+
 
          ```
             GET ON http://localhost:3030/users-history
