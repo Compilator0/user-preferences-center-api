@@ -215,7 +215,8 @@ Getting up and running is as easy as 1, 2, 3.
             http://localhost:3030/users/a2079b1a-ccdc-474d-860f-49741c262edc
 
 
-9.3 The Events web service
+    9.3 The Events web service
+
     ```
     /events 
 
