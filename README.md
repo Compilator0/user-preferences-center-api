@@ -255,8 +255,8 @@ Getting up and running is as easy as 1, 2, 3.
                     }
                 ```  
 
-                For each of those POST request the API will return the events persisted formated as above.
-                After sendind sequentially those 2 request to the same user, the user consent will become :
+    For each of those POST request the API will return the events persisted formated as above.
+    After sendind sequentially those 2 request to the same user, the user consent will become :
 
 
                 ```
